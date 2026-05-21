@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestionar Usuarios - Pet Spa</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        font-size: 14px;
+      }
+      th {
+        background: #007bff;
+        color: white;
+        padding: 10px;
+      }
+      td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+      .activo {
+        color: #28a745;
+        font-weight: bold;
+      }
+      .inactivo {
+        color: #dc3545;
+        font-weight: bold;
+      }
+      .btn-desactivar {
+        background: #dc3545;
+        color: white;
+        padding: 5px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+      }
+      .btn-desactivar:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" style="width: 90%; max-width: 700px">
+      <h2>👥 Gestión de Usuarios</h2>
+      <p style="color: #666">Lista de usuarios del sistema</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for u in usuarios %}
+          <tr>
+            <td>{{ u[0] }}</td>
+            <td>{{ u[1] }}</td>
+            <td>{{ u[3] }}</td>
+            <td>
+              {% if u[2] %}
+              <span class="activo">Activo ✅</span>
+              {% else %}
+              <span class="inactivo">Inactivo ❌</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if u[2] and u[0] != session['usuario_id'] %}
+              <form
+                action="/admin/desactivar-usuario/{{ u[0] }}"
+                method="POST"
+                onsubmit="return confirm('¿Desactivar a {{ u[1] }}?');"
+              >
+                <button type="submit" class="btn-desactivar">Desactivar</button>
+              </form>
+              {% elif u[0] == session['usuario_id'] %}
+              <small style="color: #999">Tu cuenta</small>
+              {% else %}
+              <small style="color: #999">Ya inactivo</small>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <br />
+      <a href="/dashboard">
+        <button>Volver al Dashboard</button>
+      </a>
+    </div>
+  </body>
+</html>

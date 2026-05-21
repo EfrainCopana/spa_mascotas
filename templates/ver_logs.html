@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Logs de Auditoría - Pet Spa</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <style>
+      .logs-container {
+        width: 95%;
+        max-width: 900px;
+        margin: 20px auto;
+        background: #1a1a2e;
+        color: #00ff88;
+        padding: 20px;
+        border-radius: 10px;
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+        max-height: 500px;
+        overflow-y: auto;
+        text-align: left;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      }
+      .log-line {
+        padding: 4px 0;
+        border-bottom: 1px solid #2a2a4e;
+        word-break: break-all;
+      }
+      .log-line:hover {
+        background: #2a2a4e;
+      }
+      .log-header {
+        color: #ffd700;
+        font-size: 14px;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+      .log-exito {
+        color: #00ff88;
+      }
+      .log-error {
+        color: #ff4444;
+      }
+      .log-info {
+        color: #4488ff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" style="width: 95%; max-width: 950px">
+      <h2>📋 Logs de Auditoría</h2>
+      <p style="color: #666">Últimos eventos registrados en el sistema</p>
+
+      {% if logs %}
+      <div class="logs-container">
+        <div class="log-header">🔍 Registro de Actividad</div>
+        {% for linea in logs %}
+        <div
+          class="log-line {% if 'exitoso' in linea or 'exitosa' in linea %}log-exito{% elif 'fallido' in linea or 'bloqueada' in linea %}log-error{% else %}log-info{% endif %}"
+        >
+          {{ linea.strip() }}
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p style="color: #666">No hay logs registrados aún.</p>
+      {% endif %}
+
+      <br />
+      <a href="/dashboard">
+        <button>Volver al Dashboard</button>
+      </a>
+    </div>
+  </body>
+</html>

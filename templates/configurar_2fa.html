@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configurar 2FA - Pet Spa</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container" style="width: 450px">
+      <h2>🔐 Configurar Autenticación de Dos Factores</h2>
+
+      <p style="color: #dc3545; font-weight: bold">
+        ⚠️ Como Administrador, debes configurar 2FA para continuar.
+      </p>
+
+      <p style="color: #666">
+        Escanea este código QR con <strong>Google Authenticator</strong>
+      </p>
+
+      <div
+        style="
+          background: white;
+          padding: 20px;
+          display: inline-block;
+          margin: 20px 0;
+        "
+      >
+        <img
+          src="data:image/png;base64,{{ qr_code }}"
+          alt="QR Code"
+          style="width: 200px; height: 200px"
+        />
+      </div>
+
+      <p style="color: #666; font-size: 14px">
+        O ingresa este código manualmente:<br />
+        <strong
+          style="
+            font-size: 16px;
+            letter-spacing: 3px;
+            background: #f4f4f4;
+            padding: 5px 10px;
+            border-radius: 5px;
+          "
+        >
+          {{ secret }}
+        </strong>
+      </p>
+
+      <hr />
+
+      <h3>Verificar configuración</h3>
+      <p style="color: #666">Ingresa el código de 6 dígitos de tu app:</p>
+
+      {% if error %}
+      <p
+        style="
+          color: #dc3545;
+          background: #ffe6e6;
+          padding: 10px;
+          border-radius: 5px;
+        "
+      >
+        ❌ {{ error }}
+      </p>
+      {% endif %}
+
+      <form action="/admin/activar-2fa" method="POST">
+        <input
+          type="text"
+          name="codigo"
+          placeholder="000000"
+          maxlength="6"
+          style="font-size: 24px; text-align: center; letter-spacing: 10px"
+          required
+          autofocus
+        />
+        <button type="submit" style="background: #28a745">Activar 2FA</button>
+      </form>
+    </div>
+  </body>
+</html>

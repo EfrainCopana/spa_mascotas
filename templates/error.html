@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error {{ codigo }}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2
+        style="color: {% if codigo >= 500 %}#dc3545{% else %}#ffc107{% endif %};"
+      >
+        {% if codigo >= 500 %}⚠️ Error del servidor{% else %}⚠️ Aviso{% endif %}
+      </h2>
+
+      <p>{{ mensaje }}</p>
+
+      <br />
+      <a href="/">Volver al inicio</a>
+      {% if 'usuario_id' in session %}
+      <br /><br />
+      <a href="/dashboard">Ir al dashboard</a>
+      {% endif %}
+    </div>
+  </body>
+</html>

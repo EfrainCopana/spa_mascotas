@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - Pet Spa</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container" style="width: 450px">
+      <h1>🐾 Pet Spa</h1>
+      <h2>Bienvenido, {{ usuario }}</h2>
+
+      <p style="color: #666">Rol: <strong>{{ rol }}</strong></p>
+
+      <hr style="margin: 20px 0" />
+
+      {% if rol == 'Admin' %}
+      <h3 style="color: #28a745">🔧 Panel de Administración</h3>
+      <p>Acceso total al sistema</p>
+      <a href="/admin/crear-personal">
+        <button style="background: #28a745">➕ Crear Personal</button>
+      </a>
+      <br /><br />
+      <a href="/admin/logs">
+        <button style="background: #17a2b8">📋 Ver Logs</button>
+      </a>
+      <br /><br />
+      <a href="/admin/usuarios">
+        <button style="background: #ffc107; color: #000">
+          👥 Gestionar Usuarios
+        </button>
+      </a>
+      <br /><br />
+
+      <button disabled>📊 Reportes</button>
+      <button disabled>⚙️ Configuración</button>
+      <button disabled>📋 Gestión de Usuarios</button>
+
+      {% elif rol == 'Recepción' %}
+      <h3 style="color: #007bff">📋 Panel de Recepción</h3>
+      <p>Gestión de citas y atención al cliente</p>
+      <button disabled>📅 Ver Agenda</button>
+      <button disabled>👤 Registrar Cliente</button>
+      <button disabled>💰 Cobros</button>
+      <button disabled>📞 Llamadas Pendientes</button>
+
+      {% elif rol == 'Groomer' %}
+      <h3 style="color: #6f42c1">✂️ Panel de Groomer</h3>
+      <p>Gestión de servicios de grooming</p>
+      <button disabled>📋 Mi Agenda del Día</button>
+      <button disabled>🐶 Ficha de Grooming</button>
+      <button disabled>📸 Subir Fotos</button>
+      <button disabled>✅ Checklist</button>
+
+      {% elif rol == 'Cliente' %}
+      <h3 style="color: #fd7e14">🐱 Panel de Cliente</h3>
+      <p>Bienvenido a tu espacio personal</p>
+      <button disabled>🐾 Mis Mascotas</button>
+      <button disabled>📅 Mis Citas</button>
+      <button disabled>📜 Historial</button>
+      <button disabled>💳 Facturas</button>
+      {% endif %}
+
+      <hr style="margin: 20px 0" />
+
+      <a href="/logout">
+        <button style="background: #dc3545">🚪 Cerrar Sesión</button>
+      </a>
+    </div>
+
+    <script>
+      setTimeout(function () {
+        alert("Sesión expirada por inactividad");
+        window.location.href = "/logout";
+      }, 20000);
+    </script>
+  </body>
+</html>

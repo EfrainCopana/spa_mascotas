@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reenviar Activación</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2>📧 Reenviar enlace de activación</h2>
+      <p style="color: #666">Ingresa tu correo para recibir un nuevo enlace</p>
+
+      <form action="/reenviar-activacion" method="POST">
+        <input
+          type="email"
+          name="correo"
+          placeholder="Correo electrónico"
+          required
+        />
+        <button type="submit">Reenviar</button>
+      </form>
+
+      <br />
+      <a href="/">Volver al inicio</a>
+    </div>
+  </body>
+</html>

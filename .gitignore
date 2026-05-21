@@ -1,0 +1,15 @@
+# Archivos secretos
+.env
+
+# Logs
+logs.txt
+
+# Python
+__pycache__/
+*.pyc
+venv/
+env/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db

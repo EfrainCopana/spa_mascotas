@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crear Personal</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container" style="width: 400px">
+      <h2>Crear Cuenta de Personal</h2>
+      <p style="color: #666">Solo administradores pueden crear estas cuentas</p>
+
+      <form action="/admin/crear-personal" method="POST">
+        <select
+          name="rol"
+          required
+          style="width: 100%; padding: 10px; margin: 10px 0"
+        >
+          <option value="">Seleccionar Rol</option>
+          <option value="Recepción">Recepción</option>
+          <option value="Groomer">Groomer</option>
+        </select>
+
+        <input
+          type="text"
+          name="nombre"
+          placeholder="Nombre completo"
+          required
+        />
+        <input
+          type="email"
+          name="correo"
+          placeholder="Correo electrónico"
+          required
+        />
+        <input type="text" name="telefono" placeholder="Teléfono" required />
+        <input
+          type="text"
+          name="turno"
+          placeholder="Turno (Ej: Mañana, Tarde)"
+        />
+        <input
+          type="text"
+          name="especialidad"
+          placeholder="Especialidad (solo Groomers)"
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          required
+        />
+
+        <div id="medidor-fuerza" style="margin: 10px 0">
+          <div style="display: flex; gap: 5px">
+            <div
+              id="barra1"
+              style="
+                height: 8px;
+                width: 25%;
+                background: #ddd;
+                border-radius: 4px;
+              "
+            ></div>
+            <div
+              id="barra2"
+              style="
+                height: 8px;
+                width: 25%;
+                background: #ddd;
+                border-radius: 4px;
+              "
+            ></div>
+            <div
+              id="barra3"
+              style="
+                height: 8px;
+                width: 25%;
+                background: #ddd;
+                border-radius: 4px;
+              "
+            ></div>
+            <div
+              id="barra4"
+              style="
+                height: 8px;
+                width: 25%;
+                background: #ddd;
+                border-radius: 4px;
+              "
+            ></div>
+          </div>
+          <small id="texto-fuerza" style="color: #666">Fuerza: --</small>
+        </div>
+
+        <button type="submit">Crear Usuario</button>
+      </form>
+
+      <br />
+      <a href="/dashboard">Volver al Dashboard</a>
+    </div>
+
+    <script>
+      document
+        .querySelector('input[name="password"]')
+        .addEventListener("input", function () {
+          var password = this.value;
+          var fuerza = 0;
+
+          if (password.length >= 8) fuerza += 25;
+          if (password.length >= 12) fuerza += 10;
+          if (/[A-Z]/.test(password)) fuerza += 15;
+          if (/[a-z]/.test(password)) fuerza += 15;
+          if (/[0-9]/.test(password)) fuerza += 15;
+          if (/[@$!%*?&#]/.test(password)) fuerza += 20;
+
+          fuerza = Math.min(fuerza, 100);
+
+          var color;
+          var texto;
+          if (fuerza <= 25) {
+            color = "#dc3545";
+            texto = "Débil";
+          } else if (fuerza <= 50) {
+            color = "#ffc107";
+            texto = "Regular";
+          } else if (fuerza <= 75) {
+            color = "#fd7e14";
+            texto = "Buena";
+          } else {
+            color = "#28a745";
+            texto = "Fuerte";
+          }
+
+          document.getElementById("barra1").style.background =
+            fuerza >= 25 ? color : "#ddd";
+          document.getElementById("barra2").style.background =
+            fuerza >= 50 ? color : "#ddd";
+          document.getElementById("barra3").style.background =
+            fuerza >= 75 ? color : "#ddd";
+          document.getElementById("barra4").style.background =
+            fuerza >= 100 ? color : "#ddd";
+          document.getElementById("texto-fuerza").textContent =
+            "Fuerza: " + texto;
+          document.getElementById("texto-fuerza").style.color = color;
+        });
+    </script>
+  </body>
+</html>
